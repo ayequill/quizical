@@ -1,0 +1,37 @@
+.quiz__container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5em;
+  gap: 1em;
+  .quiz {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
+  }
+}
+.question__container{
+    .question{
+        font-size: 1rem;
+        color: $textColor;
+        font-weight: 700;
+        line-height: 1.5rem;
+    }
+}
+
+.answer__container{
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: space-between;
+    gap: 1em;
+
+    .answer{
+        all: unset;
+        border: 0.794239px solid #4D5B9E;
+        border-radius: 7.94239px;
+        padding: 0.4em;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+}
