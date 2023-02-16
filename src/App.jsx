@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
 import { nanoid } from "nanoid";
+import { useQuery } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import "./sass/App.scss";
 import Homepage from "./components/Homepage";
@@ -19,16 +19,29 @@ function App() {
   // if (isLoading) return 'Loading'
   // if (error) return 'An error has occured:' + error.message
   const [startGame , setStartGame] = useState(false)
-function startQuiz () {
-  setStartGame(prevState => !prevState)
-  console.log('clicked')
+  const arr = dummyData.map(ans => {
+    return {...ans, id: nanoid(), answered: false }
+  }
+  )
+  const [quiz, setQuiz] = useState(arr)
+
+  function startQuiz () {
+    setStartGame(prevState => !prevState)
+}
+
+function selectAnswer (id) {
+  setQuiz(prevState => prevState.map(quiz => {
+    return id === quiz.id ? {...quiz,  answered: !quiz.answered } :  quiz
+  }))
+  console.log(id)
+  console.log(quiz)
 }
 
   return (
       <div className="App">
         <main className="main">
        {!startGame && <Homepage startQuiz={startQuiz} />}
-       { startGame &&<Quiz quiz={dummyData} /> }
+       { startGame &&<Quiz quiz={quiz} selectAnswer={selectAnswer}/> }
         </main>
       </div>
   );
