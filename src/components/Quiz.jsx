@@ -1,27 +1,29 @@
 import { nanoid } from "nanoid";
+
 export default function Quiz(props) {
   const questionElements = props.quiz.map((quiz) => {
-const answerId = nanoid()
-
-// console.log(props)
     return (
-      <div className="quiz">
+      <div key={nanoid()} className="quiz">
         <div className="question__container">
           <p className="question">{quiz.question}</p>
         </div>
         <div className="answer__container">
-          {quiz.incorrect_answers.map((ans, i) => {
+          {quiz.answers.map((ans) => {
             return (
-              <a href="#" className="answer" onClick={() => props.selectAnswer(i)} style={quiz.answered ?
-                {backgroundColor: '#D6DBF5'} : {}}>
+              <a
+                href="#"
+                key={nanoid()}
+                className="answer"
+                onClick={(e) => props.selectAnswer(quiz.id, e)}
+                style={
+                  props.selectedAnswer ? { backgroundColor: "#D6DBF5" } : {}
+                }
+                data-answered={ans}
+              >
                 {ans}
               </a>
             );
           })}
-          {()=> {
-            const answers =[]
-
-          }}
         </div>
       </div>
     );
