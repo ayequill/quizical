@@ -1,6 +1,10 @@
 import { nanoid } from "nanoid";
+import { useState } from "react";
 
 export default function Quiz(props) {
+  console.log(props)
+
+
   const questionElements = props.quiz.map((quiz) => {
     return (
       <div key={nanoid()} className="quiz">
@@ -8,16 +12,16 @@ export default function Quiz(props) {
           <p className="question">{quiz.question}</p>
         </div>
         <div className="answer__container">
-          {quiz.answers.map((ans) => {
+          {quiz.answers.map((ans,i) => {
             return (
               <a
                 href="#"
                 key={nanoid()}
                 className="answer"
-                onClick={(e) => props.selectAnswer(quiz.id, e)}
-                style={
-                  props.selectedAnswer ? { backgroundColor: "#D6DBF5" } : {}
-                }
+                // onClick={(e) => props.selectAnswer(quiz.id, e)}
+                // style={
+                //   color  ? { backgroundColor: "#D6DBF5" } : {}
+                // }
                 data-answered={ans}
               >
                 {ans}

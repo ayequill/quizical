@@ -21,24 +21,17 @@ function App() {
 
   const quizData = function generateQuiz() {
     const quizArray = [];
-    const answersArray = dummyData.map((ans) => [
-      ...ans.incorrect_answers,
-      ans.correct_answer,
-    ]);
-    
-    answersArray.forEach((ans) => shuffleArray(ans));
+    dummyData.map(quiz => quizArray.push({
+      id: nanoid (),
+      category: quiz.category,
+      question: quiz.question,
+      answers: shuffleArray(quiz.incorrect_answers.concat(quiz.correct_answer)),
+      answer: quiz.correct_answer,
 
-    dummyData.map((ans, i) =>
-      quizArray.push({
-        ...ans,
-        id: nanoid(),
-        answered: false,
-        answers: [...answersArray[i]],
-      })
-    );
-
+    }))
     return quizArray;
   };
+
 
   const [startGame, setStartGame] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(false);
@@ -56,28 +49,10 @@ function App() {
   }
 
 
-
-  // console.log(quizData)
-
   function startQuiz() {
     setStartGame((prevState) => !prevState);
   }
-
-  function selectAnswer(id, e) {
-    setQuiz((prevState) =>
-      prevState.map((quiz) => {
-        return id === quiz.id ? { ...quiz, answered: !quiz.answered } : quiz;
-      })
-    );
-
-    setSelectedAnswer((prev) => {
-      for (let ans of quiz) {
-        ans.answers.every((ans) => e.target.dataset.answered === ans)
-          ? !prev
-          : prev;
-      }
-    });
-  }
+  
 
   return (
     <div className="App">
@@ -86,8 +61,6 @@ function App() {
         {startGame && (
           <Quiz
             quiz={quiz}
-            selectAnswer={selectAnswer}
-            selectedAnswer={selectedAnswer}
           />
         )}
       </main>
