@@ -26,7 +26,6 @@ function App() {
       category: quiz.category,
       question: quiz.question,
       answers: shuffleArray(quiz.incorrect_answers.concat(quiz.correct_answer)),
-      answerStatus: new Array(4).fill(false),
       answer: quiz.correct_answer,
     }))
     return quizArray;
@@ -61,6 +60,7 @@ function App() {
         {startGame && (
           <Quiz
             quiz={quiz}
+            gameStatus={startQuiz}
           />
         )}
       </main>

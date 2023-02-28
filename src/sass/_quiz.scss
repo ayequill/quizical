@@ -34,7 +34,48 @@
         font-size: 0.8rem;
         cursor: pointer;
     }
+  input{
+    all: unset;
+  }
     .selected{
       background-color: #D6DBF5;
     }
+    .correct{
+      background-color: $correctColor;
+    }
+    .wrong{
+      background-color: $wrongColor;
+    }
+}
+.check__answer-btn{
+  all:unset;
+  background-color: $primaryColor;
+  padding: 0.5em;
+  border-radius: 0.2em;
+  text-align: center;
+  color: #D6DBF5;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.game__over-modal{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  z-index: 1;
+  width: max-content;
+  height: max-content;
+  padding: 2em;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  box-shadow: 1px 1px $lightColor;
+  border-radius: 0.4rem;
+  color: $textColor;
+  font-weight: bold;
+  .close__modal{
+    background-color: $wrongColor;
+    color: #4D5B9E;
+  }
 }
