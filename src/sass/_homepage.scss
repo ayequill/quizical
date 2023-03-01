@@ -1,7 +1,7 @@
 .homepage{
     align-self: center;
     justify-self: center;
-    display: flex;
+    display: grid;
     gap: 0.3em;
     flex-direction: column;
     text-align: center;
@@ -15,4 +15,8 @@
     h2{
         color: $textColor;
     }
+}
+.footer{
+    text-align: center;
+    align-self: end;
 }

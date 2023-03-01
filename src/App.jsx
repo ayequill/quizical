@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { useQuery } from "react-query";
 import { ToastContainer } from "react-toastify";
 import "./sass/App.scss";
-import 'react-toastify/dist/ReactToastify.min.css'
+import "react-toastify/dist/ReactToastify.min.css";
 import Homepage from "./components/Homepage";
 import Loading from "./components/Loading";
 import Quiz from "./components/Quiz";
@@ -11,38 +11,38 @@ import Quiz from "./components/Quiz";
 function App() {
   const [startGame, setStartGame] = useState(false);
   const [quiz, setQuiz] = useState([]);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, [startGame]);
 
-  useEffect (()=>{
-    setLoading(true)
-    setTimeout(()=>{
-      setLoading(false)
+  const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
+    fetch(
+      "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple"
+    ).then((res) => res.json())
+  );
 
-    },2000)
-  },[startGame])
-
-    const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
-      fetch(
-        "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple"
-      )
-      .then((res) => res.json())
-  );  
-
-  if (isLoading) return <Loading />
+  if (isLoading) return <Loading />;
 
   const quizData = function generateQuiz() {
     const quizArray = [];
-    data.results.map(quiz => quizArray.push({
-      id: nanoid (),
-      category: quiz.category,
-      question: quiz.question,
-      answers: shuffleArray(quiz.incorrect_answers.concat(quiz.correct_answer)),
-      answer: quiz.correct_answer,
-    }))
+    data.results.map((quiz) =>
+      quizArray.push({
+        id: nanoid(),
+        category: quiz.category,
+        question: quiz.question,
+        answers: shuffleArray(
+          quiz.incorrect_answers.concat(quiz.correct_answer)
+        ),
+        answer: quiz.correct_answer,
+      })
+    );
     return quizArray;
   };
-
 
   function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -55,37 +55,33 @@ function App() {
     return arr;
   }
 
-
   function startQuiz() {
     setStartGame((prevState) => !prevState);
-    setQuiz(quizData)
+    setQuiz(quizData);
   }
-  
-  if (loading) return <Loading />
+
+  if (loading) return <Loading />;
 
   return (
     <div className="App">
       <main className="main">
         {!startGame && <Homepage startQuiz={startQuiz} />}
-        {/* {startGame && ( */}
-          <Quiz
-            quiz={quiz}
-            gameStatus={startQuiz}
-            loading={loading}
-          />
-        {/* )} */}
+        {startGame && (
+          <Quiz quiz={quiz} gameStatus={startQuiz} loading={loading} />
+        )}
       </main>
-      <ToastContainer 
-      position="top-center"
-      autoClose={5000}
-      hideProgressBar={true}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light" />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }
