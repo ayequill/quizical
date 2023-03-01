@@ -1,5 +1,7 @@
 import { nanoid } from "nanoid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import Loading from "./Loading";
 
 export default function Quiz(props) {
   /* modifying props and adding an answered boolean */
@@ -9,6 +11,7 @@ export default function Quiz(props) {
   /* state to to add what user chose */
   const [checked, setChecked] = useState([]);
   const [quizEnd, setQuizEnd] = useState(false);
+    if(props.Loading) return <Loading />
 
   function selectAnswer(e, id) {
     const target = e.target;
@@ -33,10 +36,18 @@ export default function Quiz(props) {
     return checked.filter((ans, i) => ans === correctAnswers[i]);
   };
 
-  const enableButton = () => checked.length === 5;
+  const enableButton = () => checked.length > 9;
 
   function endGame() {
     setQuizEnd(!quizEnd);
+    toast(
+      <div className="game__score">
+        <p>{`You scored ${checkScore().length} out of ${checked.length}`}</p>
+        <button onClick={props.gameStatus} className="btn">
+          Goto Homepage
+        </button>
+      </div>
+    );
   }
 
   const selectedAnswer = (ans) => (checked.includes(ans) ? "selected" : "");
@@ -77,22 +88,21 @@ export default function Quiz(props) {
     );
   });
   return (
-    <div className="quiz__container">
+     <div className="quiz__container">
       {questionElements}
-      <button
-        className="check__answer-btn"
-        onClick={endGame}
-        disabled={!enableButton()}
-      >
-        Check Answer
-      </button>
+      {!quizEnd && (
+        <button
+          className="check__answer-btn"
+          onClick={endGame}
+          disabled={!enableButton()}
+        >
+          {quizEnd ? "Goto Homepage" : "Check Answer"}
+        </button>
+      )}
       {quizEnd && (
-        <div className="game__over-modal">
-          <p>{`You scored ${checkScore().length} out of ${checked.length}`}</p>
-          <button onClick={props.gameStatus} className="btn">
-            Goto Homepage
-          </button>
-        </div>
+        <button onClick={props.gameStatus} className="btn check__answer-btn">
+          Goto Homepage
+        </button>
       )}
     </div>
   );

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { useQuery } from "react-query";
+import { ToastContainer } from "react-toastify";
 import "./sass/App.scss";
+import 'react-toastify/dist/ReactToastify.min.css'
 import Homepage from "./components/Homepage";
 import Loading from "./components/Loading";
 import Quiz from "./components/Quiz";
@@ -11,9 +13,18 @@ function App() {
   const [quiz, setQuiz] = useState([]);
   const [loading, setLoading] = useState(false)
 
+
+  useEffect (()=>{
+    setLoading(true)
+    setTimeout(()=>{
+      setLoading(false)
+
+    },2000)
+  },[startGame])
+
     const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
       fetch(
-        "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
+        "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple"
       )
       .then((res) => res.json())
   );  
@@ -50,18 +61,31 @@ function App() {
     setQuiz(quizData)
   }
   
+  if (loading) return <Loading />
 
   return (
     <div className="App">
       <main className="main">
         {!startGame && <Homepage startQuiz={startQuiz} />}
-        {startGame && (
+        {/* {startGame && ( */}
           <Quiz
             quiz={quiz}
             gameStatus={startQuiz}
+            loading={loading}
           />
-        )}
+        {/* )} */}
       </main>
+      <ToastContainer 
+      position="top-center"
+      autoClose={5000}
+      hideProgressBar={true}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light" />
     </div>
   );
 }

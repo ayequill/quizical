@@ -56,6 +56,7 @@
   color: #D6DBF5;
   font-weight: bold;
   letter-spacing: 1px;
+  cursor: pointer;
 }
 .game__over-modal{
   position: fixed;
@@ -78,4 +79,9 @@
     background-color: $wrongColor;
     color: #4D5B9E;
   }
+}
+.game__score{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
