@@ -9,7 +9,7 @@ export default function Quiz(props) {
   /* state to to add what user chose */
   const [checked, setChecked] = useState([]);
   const [quizEnd, setQuizEnd] = useState(false);
-  
+
   function selectAnswer(e, id) {
     const target = e.target;
     setQuiz((prev) => {
@@ -37,7 +37,6 @@ export default function Quiz(props) {
 
   function endGame() {
     setQuizEnd(!quizEnd);
-    console.log(enableButton());
   }
 
   const selectedAnswer = (ans) => (checked.includes(ans) ? "selected" : "");

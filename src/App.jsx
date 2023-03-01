@@ -1,27 +1,28 @@
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import { useQuery } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 import "./sass/App.scss";
 import Homepage from "./components/Homepage";
+import Loading from "./components/Loading";
 import Quiz from "./components/Quiz";
-import axios from "axios";
-import { dummyData } from "./data.js";
 
 function App() {
-  // const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
-  //   axios
-  //     .get(
-  //       "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
-  //     )
-  //     .then((res) => res.data)
-  // );
-  // if (isLoading) return 'Loading'
-  // if (error) return 'An error has occured:' + error.message
+  const [startGame, setStartGame] = useState(false);
+  const [quiz, setQuiz] = useState([]);
+  const [loading, setLoading] = useState(false)
+
+    const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
+      fetch(
+        "https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple"
+      )
+      .then((res) => res.json())
+  );  
+
+  if (isLoading) return <Loading />
 
   const quizData = function generateQuiz() {
     const quizArray = [];
-    dummyData.map(quiz => quizArray.push({
+    data.results.map(quiz => quizArray.push({
       id: nanoid (),
       category: quiz.category,
       question: quiz.question,
@@ -31,10 +32,6 @@ function App() {
     return quizArray;
   };
 
-
-  const [startGame, setStartGame] = useState(false);
-  const [selectedAnswer, setSelectedAnswer] = useState(false);
-  const [quiz, setQuiz] = useState(quizData);
 
   function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
@@ -50,6 +47,7 @@ function App() {
 
   function startQuiz() {
     setStartGame((prevState) => !prevState);
+    setQuiz(quizData)
   }
   
 
