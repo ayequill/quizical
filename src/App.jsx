@@ -20,7 +20,7 @@ function App() {
     }, 2000);
   }, [startGame]);
 
-  const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
+  const { isLoading, data } = useQuery("repoData", () =>
     fetch(
       "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple"
     ).then((res) => res.json())
@@ -73,7 +73,7 @@ function App() {
       <ToastContainer
         position="top-center"
         autoClose={5000}
-        hideProgressBar={true}
+        hideProgressBar
         newestOnTop={false}
         closeOnClick
         rtl={false}

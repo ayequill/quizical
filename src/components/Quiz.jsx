@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "./Loading";
 
@@ -21,7 +21,7 @@ export default function Quiz(props) {
       );
     });
 
-    setChecked((prev) => {
+    setChecked(() => {
       if (target.checked && !checked.includes(target.value))
         return [...checked, target.value];
       else return checked.splice(checked.indexOf(target.value), 1);
@@ -30,9 +30,8 @@ export default function Quiz(props) {
 
   const checkScore = () => {
     const correctAnswers = [];
-    quiz.map((q, i) => {
-      correctAnswers.push(q.answer);
-    });
+    quiz.map((q) => correctAnswers.push(q.answer) );
+    
     return checked.filter((ans, i) => ans === correctAnswers[i]);
   };
 
@@ -64,7 +63,7 @@ export default function Quiz(props) {
               <label
                 key={i}
                 className={`answer ${selectedAnswer(ans)}
-                 ${quizEnd && ans === quiz.answer ? "correct" : ""}`}
+                 ${quizEnd && ans === quiz.answer ? "correct" : null}`}
                 htmlFor={ans.split(" ").join("")}
                 data-answered={ans}
               >
