@@ -36,9 +36,9 @@ Start the server
 ### The Open Trivia Database API
 ## Screenshots
 
-<img src= "./src/assets/screenshots/img_home.webp">
-<img src= "./src/assets/screenshots/quiz.webp">
-<img src= "./src/assets/screenshots/game_over.webp">
+<img width="200px" src= "./src/assets/screenshots/img_home.webp">
+<img width="200px" src= "./src/assets/screenshots/quiz.webp">
+<img width="200px" src= "./src/assets/screenshots/game_over.webp">
 
 \
 
