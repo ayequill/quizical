@@ -11,7 +11,7 @@ export default function Quiz(props) {
   /* state to to add what user chose */
   const [checked, setChecked] = useState([]);
   const [quizEnd, setQuizEnd] = useState(false);
-    if(props.Loading) return <Loading />
+  if (props.Loading) return <Loading />;
 
   function selectAnswer(e, id) {
     const target = e.target;
@@ -30,8 +30,8 @@ export default function Quiz(props) {
 
   const checkScore = () => {
     const correctAnswers = [];
-    quiz.map((q) => correctAnswers.push(q.answer) );
-    
+    quiz.map((q) => correctAnswers.push(q.answer));
+
     return checked.filter((ans, i) => ans === correctAnswers[i]);
   };
 
@@ -87,7 +87,7 @@ export default function Quiz(props) {
     );
   });
   return (
-     <div className="quiz__container">
+    <div className="quiz__container">
       {questionElements}
       {!quizEnd && (
         <button
