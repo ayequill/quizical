@@ -8,6 +8,21 @@ import Homepage from "./components/Homepage";
 import Loading from "./components/Loading";
 import Quiz from "./components/Quiz";
 
+
+const shuffleArray = (array) => {
+  /*  implementing Fisher-Yates algorithm rather than
+  using .sort() method */
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = array[i];
+        array[j] = temp;
+      }
+      return array;
+    }
+
+
 function App() {
   const [startGame, setStartGame] = useState(false);
   const [quiz, setQuiz] = useState([]);
@@ -35,25 +50,12 @@ function App() {
         id: nanoid(),
         category: quiz.category,
         question: quiz.question,
-        answers: shuffleArray(
-          quiz.incorrect_answers.concat(quiz.correct_answer)
-        ),
-        answer: quiz.correct_answer,
+        answers: shuffleArray(quiz.incorrect_answers.concat(quiz.correct_answer)),
+        answer: quiz.correct_answer
       })
     );
     return quizArray;
   };
-
-  function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = arr[i];
-      arr[j] = temp;
-    }
-    return arr;
-  }
 
   function startQuiz() {
     setStartGame((prevState) => !prevState);
