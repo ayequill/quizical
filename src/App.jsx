@@ -45,13 +45,13 @@ function App() {
 
   const quizData = function generateQuiz() {
     const quizArray = [];
-    data.results.map((quiz) =>
+    data.results.map((quizObj) =>
       quizArray.push({
         id: nanoid(),
-        category: quiz.category,
-        question: quiz.question,
-        answers: shuffleArray(quiz.incorrect_answers.concat(quiz.correct_answer)),
-        answer: quiz.correct_answer
+        category: quizObj.category,
+        question: quizObj.question,
+        answers: shuffleArray(quizObj.incorrect_answers.concat(quizObj.correct_answer)),
+        answer: quizObj.correct_answer
       })
     );
     return quizArray;
